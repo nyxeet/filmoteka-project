@@ -40,6 +40,7 @@ async function onOpen(event) {
     .then(data => {
       // получаем data и рисуем разметку страницы
       const markup = modalTemplate(data);
+      console.log(data);
       return markup;
     })
     .then(markup => {
