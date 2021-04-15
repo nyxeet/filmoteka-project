@@ -1,6 +1,9 @@
 import api from '../api/tv-api';
 import markupCard from '../templates/movie-card.hbs';
 
+import placeholder from './spinner';
+
+
 const watchedBtnRef = document.querySelector('#js-watched');
 const queueBtnRef = document.querySelector('#js-queue');
 const controlsRef = document.querySelector('.menu-controls');
@@ -19,6 +22,8 @@ function renderWatched() {
     api
       .fetchShowDetails(type, item)
       .then(res => {
+        placeholder.spinner.show();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
         const data = parseData(res);
         return data;
       })
@@ -30,6 +35,7 @@ function renderWatched() {
         api.fetchShowDetails('movie', 634528).then(data => console.log(data));
       })
       .then(() => {
+        placeholder.spinner.close();
         watchedBtnRef.addEventListener('click', console.log('a'));
       });
   });
@@ -48,6 +54,8 @@ function renderQueue() {
     api
       .fetchShowDetails(type, item)
       .then(res => {
+        placeholder.spinner.show();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
         const data = parseData(res);
         return data;
       })
@@ -59,6 +67,7 @@ function renderQueue() {
         api.fetchShowDetails('movie', 634528).then(data => console.log(data));
       })
       .then(() => {
+        placeholder.spinner.close();
         watchedBtnRef.addEventListener('click', console.log('a'));
       });
   });
@@ -85,4 +94,4 @@ function onlyUnique(e, i, a) {
   return a.indexOf(e) === i;
 }
 
-export { renderWatched };
+export { renderWatched, renderQueue };

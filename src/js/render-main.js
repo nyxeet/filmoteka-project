@@ -1,6 +1,7 @@
 import api from '../api/tv-api';
 import genres from './genres';
 import filmCard from './../templates/movie-card.hbs';
+import placeholder from './spinner'
 
 api.fetchPopular().then(console.log);
 
@@ -43,11 +44,20 @@ function parseData(data) {
 }
 
 function renderHomePageByPageNum(pageNum) {
-  api.fetchPopularByPage(pageNum).then(({ results }) => render(results));
+  api.fetchPopularByPage(pageNum).then(({ results }) => {
+    placeholder.spinner.show();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    render(results);
+  })
+    .then(res => placeholder.spinner.close());
 }
 
 function renderHomePage() {
-  api.fetchPopular().then(({ results }) => render(results));
+  api.fetchPopular().then(({ results }) => {
+    placeholder.spinner.show();
+    render(results)
+  })
+    .then(res => placeholder.spinner.close());
 }
 
 function render(results) {

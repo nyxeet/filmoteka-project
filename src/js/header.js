@@ -16,6 +16,7 @@ linkLibrary.addEventListener('click', event => {
 
   renderWatched();
 });
+
 linkMain.addEventListener('click', event => {
   event.preventDefault();
   wrapperRef.innerHTML = header;
