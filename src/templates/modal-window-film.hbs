@@ -2,14 +2,13 @@
     <div class="modal">
         <!-- часть с картинкой -->
         <div class="poster">
-            <img class="poster-image" src="https://image.tmdb.org/t/p/w500{{poster_path}}" alt="#" width="396"
-                height="478" />
+            <img class="poster-image" src="{{img}}" alt="{{imgAlt}}" width="396" height="478" />
         </div>
 
         <!-- часть с описанием фильма-->
         <div class="description">
             {{!-- название фильма --}}
-            <h2 class="description-title">{{original_title}}</h2>
+            <h2 class="description-title">{{name}}</h2>
 
             <div class="description-wrapper">
                 {{!-- название заголовков --}}
@@ -23,15 +22,11 @@
                 {{!-- значение заголовков --}}
                 <ul class="value-list">
                     <li class="value-item">
-                        <span class="value-item rating">{{vote_average}}</span> / {{vote_count}}
+                        <span class="value-item rating">{{voteAverage}}</span> / {{voteCount}}
                     </li>
                     <li class="value-item">{{popularity}}</li>
-                    <li class="value-item title">{{original_title}}</li>
-                    <li class="value-item">
-                        {{#each genres}}
-                        <p class="value-item genres">{{name}}</p>
-                        {{/each}}
-                    </li>
+                    <li class="value-item title">{{originalName}}</li>
+                    <li class="value-item">{{genres}}</li>
                 </ul>
             </div>
 
@@ -48,9 +43,6 @@
                 add to queue
             </button>
         </div>
-
-        <!-- часть с описанием фильма. Правая часть-->
-
         <!--  кнопка закрытия модалки -->
         <svg class='close-icon' width="30" height="30" xmlns="http://www.w3.org/2000/svg">
             <path d="M8 8l14 14M8 22L22 8" stroke="#000" stroke-width="2" />

@@ -12,9 +12,13 @@ api.fetchPopular().then(({ results }) => {
 
 function parseData(data) {
   const id = data.id;
-  const title = data.title ? data.title : 'No information';
+  const type = data.media_type; // changed
+  const title = data.title ? data.title : data.original_name; // changed
   const url = `https://image.tmdb.org/t/p/w300${data.poster_path}`;
-  const year = data.release_date ? data.release_date.slice(0, 4) : 'No info';
+  const year = data.release_date
+    ? data.release_date.slice(0, 4)
+    : data.first_air_date.slice(0, 4); // changed
+
   const genresStr = data.genre_ids
     .map(item => {
       const genre = genres.find(genre => genre.id === item);
@@ -27,6 +31,7 @@ function parseData(data) {
 
   return {
     id,
+    type, // changed
     title,
     url,
     year,
