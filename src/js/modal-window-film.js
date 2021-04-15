@@ -3,7 +3,8 @@ import modalTemplate from '../templates/modal-window-film.hbs';
 // модалка
 import * as basicLightbox from 'basiclightbox';
 import 'basiclightbox/dist/basicLightbox.min.css';
-
+let storageWatched = [];
+let storageQueue = [];
 // ссылка нашего списка
 const filmListRef = document.querySelector('.movies');
 
@@ -46,6 +47,31 @@ async function onOpen(event) {
       instance = basicLightbox.create(markup);
       // показываем модалку
       instance.show();
+    })
+    .then(() => {
+      const watchedBtnRef = document.querySelector('.watchedBtn');
+
+      watchedBtnRef.addEventListener('click', () => {
+        if (localStorage.getItem('watched')) {
+          storageWatched = JSON.parse(localStorage.getItem('watched'));
+        }
+        storageWatched.push(filmId);
+        console.log(storageWatched);
+
+        localStorage.setItem('watched', JSON.stringify(storageWatched));
+      });
+    })
+    .then(() => {
+      const queueBtnRef = document.querySelector('.queueBtn');
+
+      queueBtnRef.addEventListener('click', () => {
+        if (localStorage.getItem('queue')) {
+          storageQueue = JSON.parse(localStorage.getItem('queue'));
+        }
+        storageQueue.push(filmId);
+
+        localStorage.setItem('queue', JSON.stringify(storageQueue));
+      });
     });
 
   // ссылка на кнопку закрытия

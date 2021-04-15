@@ -18,9 +18,15 @@ const fetchPopular = () => {
     `${baseURL}/3/trending/all/day?api_key=7f708811f1643542b21c8f4bf6e8e2f6`,
   ).then(res => res.json());
 };
+const fetchPopularByPage = pageNum => {
+  return fetch(
+    `${baseURL}/3/trending/all/day?page=${pageNum}&api_key=7f708811f1643542b21c8f4bf6e8e2f6`,
+  ).then(res => res.json());
+};
 
 export default {
   fetchShowDetails,
   fetchShowWithQuery,
   fetchPopular,
+  fetchPopularByPage,
 };
