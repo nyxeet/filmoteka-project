@@ -9,6 +9,8 @@ const filmListRef = document.querySelector('.movies');
 
 // для записи переменной в глобальную область видимости
 let instance;
+let storageWatched = [];
+let storageQueue = [];
 
 // вешаем слушателя на список и отслеживаем клик по img
 filmListRef.addEventListener('click', onOpen);
@@ -34,6 +36,7 @@ async function onOpen(event) {
     .then(res => {
       // парсим данные
       const data = parsedData(res);
+      console.log(data);
       return data;
     })
     .then(data => {
@@ -46,6 +49,31 @@ async function onOpen(event) {
       instance = basicLightbox.create(markup);
       // показываем модалку
       instance.show();
+    })
+    .then(() => {
+      const watchedBtnRef = document.querySelector('.watchedBtn');
+
+      watchedBtnRef.addEventListener('click', () => {
+        if (localStorage.getItem('watched')) {
+          storageWatched = JSON.parse(localStorage.getItem('watched'));
+        }
+        storageWatched.push(filmId);
+        console.log(storageWatched);
+
+        localStorage.setItem('watched', JSON.stringify(storageWatched));
+      });
+    })
+    .then(() => {
+      const queueBtnRef = document.querySelector('.queueBtn');
+
+      queueBtnRef.addEventListener('click', () => {
+        if (localStorage.getItem('queue')) {
+          storageQueue = JSON.parse(localStorage.getItem('queue'));
+        }
+        storageQueue.push(filmId);
+
+        localStorage.setItem('queue', JSON.stringify(storageQueue));
+      });
     });
 
   // ссылка на кнопку закрытия
