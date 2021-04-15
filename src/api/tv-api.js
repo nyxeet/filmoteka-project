@@ -1,8 +1,8 @@
 const baseURL = 'https://api.themoviedb.org';
 const API_KEY = '7f708811f1643542b21c8f4bf6e8e2f6';
 
-const fetchShowDetails = showId => {
-  return fetch(`${baseURL}/3/movie/${showId}?&api_key=${API_KEY}`).then(res =>
+const fetchShowDetails = (type, showId) => {
+  return fetch(`${baseURL}/3/${type}/${showId}?&api_key=${API_KEY}`).then(res =>
     res.json(),
   );
 };
