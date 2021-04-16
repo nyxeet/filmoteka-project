@@ -2,7 +2,7 @@
     <div class="modal">
         <!-- часть с картинкой -->
         <div class="poster">
-            <img class="poster-image" src="{{img}}" alt="{{imgAlt}}" width="396" height="478" />
+            <img class="poster-image" src="{{img}}" alt="{{imgAlt}}" />
         </div>
 
         <!-- часть с описанием фильма-->
@@ -35,13 +35,18 @@
                 {{overview}}
             </p>
 
-            <button class="watchedBtn btn--active" type="button">
-                add to Watched
-            </button>
+            <div class="btn-wrapper">
+                <button class="watchedBtn btn--active" type="button">
+                    add to Watched
+                </button>
 
-            <button class="queueBtn btn--active" type="button">
-                add to queue
-            </button>
+                <button class="queueBtn btn--active" type="button">
+                    add to queue
+                </button>
+            </div>
+
+
+
         </div>
         <!--  кнопка закрытия модалки -->
         <svg class='close-icon' width="30" height="30" xmlns="http://www.w3.org/2000/svg">

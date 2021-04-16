@@ -28,9 +28,11 @@ function renderQueue() {
 
 function parseData(data) {
   const id = data.id;
-  const type = data.media_type;
-  const title = data.title ? data.title : data.original_name;
-  const url = `https://image.tmdb.org/t/p/w300${data.poster_path}`;
+
+  const type = 'movie';
+  const title = data.original_title || data.title || data.original_name;
+  const url = 'https://image.tmdb.org/t/p/w500' + data.poster_path;
+
   const year = data.release_date
     ? data.release_date.slice(0, 4)
     : data.first_air_date.slice(0, 4);
@@ -40,11 +42,11 @@ function parseData(data) {
 
   return {
     id,
-    type,
     title,
     url,
     year,
     genresStr,
+    type,
   };
 }
 
