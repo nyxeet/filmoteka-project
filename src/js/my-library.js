@@ -65,6 +65,8 @@ function renderQueue() {
 }
 
 function parseData(data) {
+  const id = data.id;
+  const type = 'movie';
   const title = data.original_title || data.title || data.original_name;
   const url = 'https://image.tmdb.org/t/p/w500' + data.poster_path;
   const year = data.release_date
@@ -74,10 +76,12 @@ function parseData(data) {
     data.genres.map(item => item.name).join(', ') || 'No information';
 
   return {
+    id,
     title,
     url,
     year,
     genresStr,
+    type,
   };
 }
 

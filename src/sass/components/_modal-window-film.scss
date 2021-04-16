@@ -57,6 +57,7 @@
 .poster-image {
   display: block;
   border-radius: 5px;
+  object-fit: cover;
 
   @media screen and (min-width: 1024px) {
     width: 396px;
