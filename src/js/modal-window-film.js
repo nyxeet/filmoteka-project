@@ -85,8 +85,10 @@ async function onOpen(event) {
 
   // ссылка на кнопку закрытия
   const closeBtnRef = document.querySelector('.close-icon');
+  const pathRef = document.querySelector('path');
   // слушатель на нажатие для закрытия модалки
   closeBtnRef.addEventListener('click', onClose);
+  pathRef.addEventListener('click', onClose);
   // во время когда модалка открыта - вешаем слушателя окно для закрытия по ESCAPE
   window.addEventListener('keydown', onClose);
 }

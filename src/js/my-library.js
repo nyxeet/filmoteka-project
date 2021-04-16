@@ -8,9 +8,7 @@ const movieList = document.querySelector('.movies');
 
 function renderWatched() {
   const array = JSON.parse(localStorage.getItem('watched'));
-  console.log(array);
   const filtered = onlyUnique(array);
-  console.log(array);
   const data = filtered.map(item => parseData(item));
   const markup = data.map(item => markupCard(item)).join('');
 
@@ -54,4 +52,4 @@ function onlyUnique(array) {
   return array.filter((e, i) => array.findIndex(obj => obj.id === e.id) === i);
 }
 
-export { renderWatched };
+export { renderWatched, renderQueue };
