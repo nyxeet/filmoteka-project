@@ -3,13 +3,16 @@ import modalTemplate from '../templates/modal-window-film.hbs';
 // модалка
 import * as basicLightbox from 'basiclightbox';
 import 'basiclightbox/dist/basicLightbox.min.css';
-let storageWatched = [];
-let storageQueue = [];
+
 // ссылка нашего списка
 const filmListRef = document.querySelector('.movies');
 
 // для записи переменной в глобальную область видимости
 let instance;
+
+let storageWatched = [];
+let storageQueue = [];
+let obj = {};
 
 // вешаем слушателя на список и отслеживаем клик по img
 filmListRef.addEventListener('click', onOpen);
@@ -33,14 +36,20 @@ async function onOpen(event) {
   await api
     .fetchShowDetails(mediaType, filmId)
     .then(res => {
+      obj = res;
+      obj.media_type = mediaType;
+      console.log(obj);
+
       // парсим данные
       const data = parsedData(res);
+
       return data;
     })
     .then(data => {
       // получаем data и рисуем разметку страницы
       const markup = modalTemplate(data);
       console.log(data);
+
       return markup;
     })
     .then(markup => {
@@ -56,8 +65,7 @@ async function onOpen(event) {
         if (localStorage.getItem('watched')) {
           storageWatched = JSON.parse(localStorage.getItem('watched'));
         }
-        storageWatched.push(filmId);
-        console.log(storageWatched);
+        storageWatched.push(obj);
 
         localStorage.setItem('watched', JSON.stringify(storageWatched));
       });
@@ -69,7 +77,7 @@ async function onOpen(event) {
         if (localStorage.getItem('queue')) {
           storageQueue = JSON.parse(localStorage.getItem('queue'));
         }
-        storageQueue.push(filmId);
+        storageQueue.push(obj);
 
         localStorage.setItem('queue', JSON.stringify(storageQueue));
       });

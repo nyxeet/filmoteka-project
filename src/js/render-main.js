@@ -54,6 +54,7 @@ function render(results) {
   const data = results.map(item => parseData(item));
   const markup = data.map(item => filmCard(item)).join('');
   moviesRef.innerHTML = markup;
+  console.log(results);
 }
 
 renderHomePage();
