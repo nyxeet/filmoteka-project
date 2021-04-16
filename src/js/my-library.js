@@ -29,7 +29,7 @@ function renderQueue() {
 function parseData(data) {
   const id = data.id;
 
-  const type = 'movie';
+  const type = data.media_type;
   const title = data.original_title || data.title || data.original_name;
   const url = 'https://image.tmdb.org/t/p/w500' + data.poster_path;
 
