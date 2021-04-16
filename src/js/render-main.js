@@ -15,7 +15,7 @@ formRef.addEventListener('submit', event => {
 
 function parseData(data) {
   const id = data.id;
-  const type = data.media_type; // changed
+  const type = data.media_type ? data.media_type : 'movie'; // changed
   const title = data.title ? data.title : data.original_name; // changed
   const url = `https://image.tmdb.org/t/p/w300${data.poster_path}`;
   const year = data.release_date
