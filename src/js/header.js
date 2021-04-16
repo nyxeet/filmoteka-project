@@ -48,6 +48,7 @@ function mainRoute(event) {
   linkMain.classList.add('current');
   linkLibrary.classList.remove('current');
   renderHomePage();
+  window.history.replaceState({}, null, '/');
 }
 function myLibraryRoute(event) {
   event.preventDefault();
@@ -59,4 +60,5 @@ function myLibraryRoute(event) {
   headerRef.classList.add('header__background-myLibrary');
   linkMain.classList.remove('current');
   linkLibrary.classList.add('current');
+  window.history.replaceState({}, null, '/my-library');
 }
