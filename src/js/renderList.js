@@ -1,6 +1,5 @@
 import genres from './genres';
 import filmCard from '../templates/movie-card.hbs';
-
 const moviesRef = document.querySelector('.movies');
 
 function renderList(results) {
