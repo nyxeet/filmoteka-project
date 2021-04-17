@@ -6,7 +6,7 @@ const wrapperRef = document.querySelector('.wrapper');
 const movieList = document.querySelector('.movies');
 
 wrapperRef.innerHTML = header;
-
+const pag = document.querySelector('.paginator');
 const logo = document.querySelector('.site-logo__link');
 const linkLibrary = document.querySelector('.nav-link-library');
 const linkMain = document.querySelector('.nav-link-home');
@@ -51,6 +51,7 @@ function mainRoute(event) {
   linkLibrary.classList.remove('current');
   queueBtnRef.classList.remove('active-control-btn');
   watchedBtnRef.classList.remove('active-control-btn');
+  pag.classList.remove('is-hidden');
   renderHomePage();
   window.history.replaceState({}, null, '/');
 }
@@ -65,5 +66,6 @@ function myLibraryRoute(event) {
   linkMain.classList.remove('current');
   linkLibrary.classList.add('current');
   watchedBtnRef.classList.add('active-control-btn');
+  pag.classList.add('is-hidden');
   window.history.replaceState({}, null, '/my-library');
 }
