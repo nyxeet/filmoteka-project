@@ -1,9 +1,5 @@
-import api from '../api/tv-api';
-import markupCard from '../templates/movie-card.hbs';
+import { renderList } from './renderList';
 
-const watchedBtnRef = document.querySelector('#js-watched');
-const queueBtnRef = document.querySelector('#js-queue');
-const controlsRef = document.querySelector('.menu-controls');
 const movieList = document.querySelector('.movies');
 
 function renderWatched() {
@@ -13,11 +9,8 @@ function renderWatched() {
       '<li class="nothing-message">Nothing in watched yet :)</li>';
     return;
   }
-  const filtered = onlyUnique(array);
-  const data = filtered.map(item => parseData(item));
-  const markup = data.map(item => markupCard(item)).join('');
-
-  movieList.innerHTML = markup;
+  const data = onlyUnique(array);
+  renderList(data);
 }
 
 function renderQueue() {
@@ -27,35 +20,8 @@ function renderQueue() {
       '<li class="nothing-message">Nothing in queue yet :)</li>';
     return;
   }
-  const filtered = onlyUnique(array);
-  const data = filtered.map(item => parseData(item));
-  const markup = data.map(item => markupCard(item)).join('');
-
-  movieList.innerHTML = markup;
-}
-
-function parseData(data) {
-  const id = data.id;
-
-  const type = 'movie';
-  const title = data.original_title || data.title || data.original_name;
-  const url = 'https://image.tmdb.org/t/p/w500' + data.poster_path;
-
-  const year = data.release_date
-    ? data.release_date.slice(0, 4)
-    : data.first_air_date.slice(0, 4);
-
-  const genresStr =
-    data.genres.map(item => item.name).join(', ') || 'No information';
-
-  return {
-    id,
-    title,
-    url,
-    year,
-    genresStr,
-    type,
-  };
+  const data = onlyUnique(array);
+  renderList(data);
 }
 
 function onlyUnique(array) {

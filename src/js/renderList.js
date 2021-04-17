@@ -17,7 +17,8 @@ function parseData(data) {
     ? data.release_date.slice(0, 4)
     : data.first_air_date.slice(0, 4); // changed
 
-  const genresStr = data.genre_ids
+  const gen = data.genre_ids ? data.genre_ids : data.genres;
+  const genresStr = gen
     .map(item => {
       const genre = genres.find(genre => genre.id === item);
       if (genre) {
