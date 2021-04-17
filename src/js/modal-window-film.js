@@ -4,6 +4,8 @@ import modalTemplate from '../templates/modal-window-film.hbs';
 import * as basicLightbox from 'basiclightbox';
 import 'basiclightbox/dist/basicLightbox.min.css';
 
+import { renderWatched } from './my-library';
+
 // ссылка нашего списка
 const filmListRef = document.querySelector('.movies');
 
@@ -40,34 +42,64 @@ async function onOpen(event) {
       obj.media_type = mediaType;
       console.log(obj);
 
-      // парсим данные
-      const data = parsedData(res);
+      const array = JSON.parse(localStorage.getItem('watched'));
+      let isWatched;
+      if (array) {
+        isWatched = array.find(item => item.id == res.id);
+      }
 
-      return data;
+      // парсим данные
+      const data = parsedData(res, isWatched);
+
+      return { data, isWatched };
     })
-    .then(data => {
+    .then(({ data, isWatched }) => {
       // получаем data и рисуем разметку страницы
+
       const markup = modalTemplate(data);
       console.log(data);
 
-      return markup;
+      return { markup, isWatched };
     })
-    .then(markup => {
+    .then(({ markup, isWatched }) => {
+
       // создаем плагин basicLightbox и передаем в него разметку
       instance = basicLightbox.create(markup);
       // показываем модалку
       instance.show();
+
+      return isWatched;
     })
-    .then(() => {
+    .then(isWatched => {
       const watchedBtnRef = document.querySelector('.watchedBtn');
 
       watchedBtnRef.addEventListener('click', () => {
-        if (localStorage.getItem('watched')) {
+        if (!isWatched) {
+          if (localStorage.getItem('watched')) {
+            storageWatched = JSON.parse(localStorage.getItem('watched'));
+          }
+          storageWatched.push(obj);
+          localStorage.setItem('watched', JSON.stringify(storageWatched));
+          watchedBtnRef.disabled = true;
+          watchedBtnRef.textContent = 'Added';
+        } else {
           storageWatched = JSON.parse(localStorage.getItem('watched'));
+          const index = storageWatched.findIndex(
+            item => item.id == isWatched.id,
+          );
+          storageWatched.splice(index, 1);
+          if (storageWatched.length === 0) {
+            localStorage.removeItem('watched');
+          } else {
+            localStorage.setItem('watched', JSON.stringify(storageWatched));
+          }
+          watchedBtnRef.disabled = true;
+          watchedBtnRef.textContent = 'Removed';
+          if (window.location.href.endsWith('my-library')) {
+            renderWatched();
+          }
         }
-        storageWatched.push(obj);
 
-        localStorage.setItem('watched', JSON.stringify(storageWatched));
       });
     })
     .then(() => {
@@ -104,7 +136,8 @@ function onClose(event) {
 }
 
 // парсим полученые данные с API
-function parsedData(res) {
+
+function parsedData(res, isWatched) {
   const img = 'https://image.tmdb.org/t/p/w500' + res.poster_path;
   const name = res.title || res.original_title || res.original_name;
   const originalName = res.original_title || res.title || res.original_name;
