@@ -1,0 +1,56 @@
+<header class="header__background-home" id="header">
+  <div class="container header">
+    <div class="site-logo">
+      <a href="#" class="site-logo__link">
+        <svg width="24" height="24">
+          <use class="icon-film" href="../images/sprite.svg#icon-film-1"></use>
+        </svg>
+        <span class="site-logo__txt">Filmoteka</span>
+      </a>
+      <ul class="header-nav__list">
+        <li class="header-nav__list-item">
+          <a href="" class="header-nav__list-item link nav-link-home current"
+            >HOME</a
+          >
+        </li>
+        <li class="header-nav__list-item">
+          <a href="" class="header-nav__list-item link nav-link-library"
+            >MY LIBRARY</a
+          >
+        </li>
+      </ul>
+    </div>
+    <div class="toggle-container">
+      <div class="menu-search">
+        <form class="search-form" id="search-form">
+          <input
+            class="menu-search__films search-field"
+            type="text"
+            name="text"
+            autocomplete="off"
+            placeholder="Поиск фильмов"
+          />
+          <button type="submit" class="search-btn">
+            <svg width="12" height="12">
+              <use href="../images/sprite.svg#icon-search-2-1"></use>
+            </svg>
+          </button>
+        </form>
+        <p class="warning">
+          Search result not successful. Enter the correct movie name and try
+          again!
+        </p>
+      </div>
+      <div class="menu-controls is-hidden">
+        <button
+          type="button"
+          class="menu__btn active-control-btn"
+          id="js-watched"
+        >
+          WATCHED
+        </button>
+        <button type="button" class="menu__btn" id="js-queue">QUEUE</button>
+      </div>
+    </div>
+  </div>
+</header>
