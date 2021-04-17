@@ -13,7 +13,10 @@ function renderHomePageByPageNum(pageNum) {
   placeholder.spinner.show();
   api
     .fetchPopularByPage(pageNum)
-    .then(({ results }) => renderList(results))
+    .then(({ results }) => {
+      console.log(results);
+      renderList(results);
+    })
     .finally(() => placeholder.spinner.close());
   window.scrollTo(0, 0);
 }
