@@ -33,6 +33,7 @@ peginatorPrev.addEventListener('click', event => {
     renderHomePageByPageNum(paginatorCurrent);
   }
   showFirstItems();
+  showLastItems();
 });
 
 peginatorNext.addEventListener('click', event => {
@@ -46,6 +47,7 @@ peginatorNext.addEventListener('click', event => {
   paginatorCurrent += 1;
   renderHomePageByPageNum(paginatorCurrent);
   showFirstItems();
+  showLastItems();
 });
 
 pages.addEventListener('click', event => {
