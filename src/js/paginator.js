@@ -73,6 +73,7 @@ firstItem.addEventListener('click', event => {
   paginatorCurrent = pageNum;
   renderHomePageByPageNum(pageNum);
   showFirstItems();
+  showLastItems();
 });
 
 lastItem.addEventListener('click', event => {
