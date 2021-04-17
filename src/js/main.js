@@ -10,7 +10,11 @@ function renderHomeByQuery(query) {
     .finally(() => placeholder.spinner.close());
 }
 function renderHomePageByPageNum(pageNum) {
-  api.fetchPopularByPage(pageNum).then(({ results }) => renderList(results));
+  placeholder.spinner.show();
+  api
+    .fetchPopularByPage(pageNum)
+    .then(({ results }) => renderList(results))
+    .finally(() => placeholder.spinner.close());
   window.scrollTo(0, 0);
 }
 
