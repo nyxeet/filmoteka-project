@@ -21,6 +21,7 @@ const input = document.querySelector('.search-field');
 formRef.addEventListener('submit', event => {
   event.preventDefault();
   renderHomeByQuery(input.value);
+  input.value = '';
 });
 
 linkLibrary.addEventListener('click', event => myLibraryRoute(event));
