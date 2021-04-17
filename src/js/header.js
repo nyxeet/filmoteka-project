@@ -47,6 +47,8 @@ function mainRoute(event) {
   headerRef.classList.add('header__background-home');
   linkMain.classList.add('current');
   linkLibrary.classList.remove('current');
+  queueBtnRef.classList.remove('active-control-btn');
+  watchedBtnRef.classList.remove('active-control-btn');
   renderHomePage();
   window.history.replaceState({}, null, '/');
 }
@@ -60,5 +62,6 @@ function myLibraryRoute(event) {
   headerRef.classList.add('header__background-myLibrary');
   linkMain.classList.remove('current');
   linkLibrary.classList.add('current');
+  watchedBtnRef.classList.add('active-control-btn');
   window.history.replaceState({}, null, '/my-library');
 }
