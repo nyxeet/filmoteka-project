@@ -41,6 +41,7 @@ watchedBtnRef.addEventListener('click', event => {
 
 function mainRoute(event) {
   event.preventDefault();
+  formRef.reset();
   menuSearchRef.classList.remove('is-hidden');
   menuControlsRef.classList.add('is-hidden');
   headerRef.classList.remove('header__background-myLibrary');
