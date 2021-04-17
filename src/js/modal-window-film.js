@@ -22,8 +22,14 @@ filmListRef.addEventListener('click', onOpen);
 async function onOpen(event) {
   const target = event.target;
 
-  // проверка, чтобы клацнуть в img
-  if (target.nodeName !== 'IMG') {
+  // проверка на click в карточку фильма
+  if (
+    target.nodeName !== 'IMG' &&
+    target.nodeName !== 'DIV' &&
+    target.nodeName !== 'SPAN' &&
+    target.nodeName !== 'H2' &&
+    target.nodeName !== 'LI'
+  ) {
     console.log('wrong target');
     return;
   }
@@ -133,8 +139,18 @@ function onClose(event) {
 // парсим полученые данные с API
 function parsedData(res, isWatched) {
   const img = 'https://image.tmdb.org/t/p/w500' + res.poster_path;
-  const name = res.title || res.original_title || res.original_name;
-  const originalName = res.original_title || res.title || res.original_name;
+  const name =
+    res.title ||
+    res.original_title ||
+    res.original_name ||
+    res.name ||
+    'No information';
+  const originalName =
+    res.original_title ||
+    res.title ||
+    res.original_name ||
+    res.name ||
+    'No information';
   const imgAlt = name + ' poster';
   const overview = res.overview || 'No information';
   const voteAverage = res.vote_average || 'No information';

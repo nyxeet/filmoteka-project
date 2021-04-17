@@ -18,6 +18,7 @@ const genres = [
   { id: 53, name: 'Thriller' },
   { id: 10752, name: 'War' },
   { id: 37, name: 'Western' },
+  { id: 0, name: 'No info' }, // added
 ];
 
 export default genres;
