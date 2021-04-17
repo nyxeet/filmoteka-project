@@ -11,6 +11,7 @@ function renderHomeByQuery(query) {
 }
 function renderHomePageByPageNum(pageNum) {
   api.fetchPopularByPage(pageNum).then(({ results }) => renderList(results));
+  window.scrollTo(0, 0);
 }
 
 function renderHomePage() {
