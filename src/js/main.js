@@ -2,11 +2,18 @@ import api from '../api/tv-api';
 import { renderList } from './renderList';
 import placeholder from './spinner';
 
-function renderHomeByQuery(query) {
+function renderHomeByQuery(query, messageRef) {
   placeholder.spinner.show();
   api
     .fetchShowWithQuery(query)
-    .then(({ results }) => renderList(results))
+    .then(({ results }) => {
+      if (results.length === 0) {
+        messageRef.classList.add('warning-message');
+      } else {
+        messageRef.classList.remove('warning-message');
+      }
+      renderList(results);
+    })
     .finally(() => placeholder.spinner.close());
 }
 function renderHomePageByPageNum(pageNum) {
