@@ -9,16 +9,21 @@ function renderList(results) {
 }
 
 function parseData(data) {
-  const id = data.id;
-  const type = data.media_type ? data.media_type : 'movie'; // changed
-  const title = data.title ? data.title : data.original_name; // changed
-  const url = `https://image.tmdb.org/t/p/w300${data.poster_path}`;
+  const id = data.id || 'No information';
+  const type = data.media_type ? data.media_type : data.type || 'movie';
+  const title = data.title
+    ? data.title
+    : data.original_name || data.name || 'No information';
 
-  const year = data.release_date
-    ? data.release_date.slice(0, 4)
-    : data.first_air_date.slice(0, 4); // changed
+  const url = data.poster_path
+    ? `https://image.tmdb.org/t/p/w300${data.poster_path}`
+    : 'https://images.pexels.com/photos/4439425/pexels-photo-4439425.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940';
 
-  const gen = data.genre_ids ? data.genre_ids : data.genres;
+  const yearInfo = data.release_date || data.first_air_date || 'No information';
+  const year = yearInfo.slice(0, 4);
+
+  const gen = data.genre_ids || data.genres || ['0']; // added
+
   const genresStr = gen
     .map(item => {
       const genre = genres.find(genre => genre.id === item);
@@ -31,7 +36,7 @@ function parseData(data) {
 
   return {
     id,
-    type, // changed
+    type,
     title,
     url,
     year,
