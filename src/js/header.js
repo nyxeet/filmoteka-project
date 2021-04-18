@@ -17,10 +17,11 @@ const queueBtnRef = document.querySelector('#js-queue');
 const watchedBtnRef = document.querySelector('#js-watched');
 const formRef = document.querySelector('.search-form');
 const input = document.querySelector('.search-field');
+const warningRef = document.querySelector('.warning');
 
 formRef.addEventListener('submit', event => {
   event.preventDefault();
-  renderHomeByQuery(input.value);
+  renderHomeByQuery(input.value, warningRef);
   input.value = '';
 });
 
@@ -52,6 +53,7 @@ function mainRoute(event) {
   queueBtnRef.classList.remove('active-control-btn');
   watchedBtnRef.classList.remove('active-control-btn');
   pag.classList.remove('is-hidden');
+  warningRef.classList.remove('warning-message');
   renderHomePage();
   window.history.replaceState({}, null, '/');
 }
