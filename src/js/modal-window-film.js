@@ -3,7 +3,7 @@ import modalTemplate from '../templates/modal-window-film.hbs';
 // модалка
 import * as basicLightbox from 'basiclightbox';
 import 'basiclightbox/dist/basicLightbox.min.css';
-import { renderWatched } from './my-library';
+import { renderWatched, renderQueue } from './my-library';
 
 // ссылка нашего списка
 const filmListRef = document.querySelector('.movies');
@@ -46,44 +46,53 @@ async function onOpen(event) {
       obj = res;
       obj.media_type = mediaType;
       console.log(obj);
-      const array = JSON.parse(localStorage.getItem('watched'));
+      const arrWatched = JSON.parse(localStorage.getItem('watched'));
       let isWatched;
-      if (array) {
-        isWatched = array.find(item => item.id == res.id);
+      if (arrWatched) {
+        isWatched = arrWatched.find(item => item.id == res.id);
+      }
+      let inQueue;
+      const arrQueue = JSON.parse(localStorage.getItem('queue'));
+      if (arrQueue) {
+        inQueue = arrQueue.find(item => item.id == res.id);
       }
 
       // парсим данные
-      const data = parsedData(res, isWatched);
+      const data = parsedData(res, isWatched, inQueue);
 
-      return { data, isWatched };
+      return { data, isWatched, inQueue };
     })
-    .then(({ data, isWatched }) => {
+    .then(({ data, isWatched, inQueue }) => {
       // получаем data и рисуем разметку страницы
 
       const markup = modalTemplate(data);
       console.log(data);
 
-      return { markup, isWatched };
+      return { markup, isWatched, inQueue };
     })
-    .then(({ markup, isWatched }) => {
+    .then(({ markup, isWatched, inQueue }) => {
       // создаем плагин basicLightbox и передаем в него разметку
       instance = basicLightbox.create(markup);
       // показываем модалку
       instance.show();
-      return isWatched;
+      return { isWatched, inQueue };
     })
-    .then(isWatched => {
+    .then(({ isWatched, inQueue }) => {
       const watchedBtnRef = document.querySelector('.watchedBtn');
+      if (isWatched) {
+        watchedBtnRef.classList.add('btn-active');
+      }
 
       watchedBtnRef.addEventListener('click', () => {
         if (!isWatched) {
+          watchedBtnRef.classList.add('btn-active');
           if (localStorage.getItem('watched')) {
             storageWatched = JSON.parse(localStorage.getItem('watched'));
           }
           storageWatched.push(obj);
           localStorage.setItem('watched', JSON.stringify(storageWatched));
           watchedBtnRef.disabled = true;
-          watchedBtnRef.textContent = 'Added';
+          watchedBtnRef.textContent = 'Added to watched';
         } else {
           storageWatched = JSON.parse(localStorage.getItem('watched'));
           const index = storageWatched.findIndex(
@@ -96,23 +105,44 @@ async function onOpen(event) {
             localStorage.setItem('watched', JSON.stringify(storageWatched));
           }
           watchedBtnRef.disabled = true;
-          watchedBtnRef.textContent = 'Removed';
+          watchedBtnRef.textContent = 'Removed from watched';
           if (window.location.href.endsWith('my-library')) {
             renderWatched();
           }
         }
       });
+      return inQueue;
     })
-    .then(() => {
+    .then(inQueue => {
       const queueBtnRef = document.querySelector('.queueBtn');
-
+      if (inQueue) {
+        queueBtnRef.classList.add('btn-active');
+      }
       queueBtnRef.addEventListener('click', () => {
-        if (localStorage.getItem('queue')) {
+        if (!inQueue) {
+          queueBtnRef.classList.add('btn-active');
+          if (localStorage.getItem('queue')) {
+            storageQueue = JSON.parse(localStorage.getItem('queue'));
+          }
+          storageQueue.push(obj);
+          localStorage.setItem('queue', JSON.stringify(storageQueue));
+          queueBtnRef.disabled = true;
+          queueBtnRef.textContent = 'Added to queue';
+        } else {
           storageQueue = JSON.parse(localStorage.getItem('queue'));
+          const index = storageQueue.findIndex(item => item.id == inQueue.id);
+          storageQueue.splice(index, 1);
+          if (storageQueue.length === 0) {
+            localStorage.removeItem('queue');
+          } else {
+            localStorage.setItem('queue', JSON.stringify(storageQueue));
+          }
+          queueBtnRef.disabled = true;
+          queueBtnRef.textContent = 'Removed from queue';
+          if (window.location.href.endsWith('my-library')) {
+            renderQueue();
+          }
         }
-        storageQueue.push(obj);
-
-        localStorage.setItem('queue', JSON.stringify(storageQueue));
       });
     });
 
@@ -137,7 +167,7 @@ function onClose(event) {
 }
 
 // парсим полученые данные с API
-function parsedData(res, isWatched) {
+function parsedData(res, isWatched, inQueue) {
   const img = 'https://image.tmdb.org/t/p/w500' + res.poster_path;
   const name =
     res.title ||
@@ -156,9 +186,11 @@ function parsedData(res, isWatched) {
   const voteAverage = res.vote_average || 'No information';
   const voteCount = res.vote_count || 'No information';
   const popularity = res.popularity || 'No information';
-  const genres =
-    res.genres.map(item => item.name).join(', ') || 'No information';
+  const genres = res.genres
+    ? res.genres.map(item => item.name).join(', ')
+    : 'No information';
   const watchText = isWatched ? 'remove from watched' : 'add to Watched';
+  const queueText = inQueue ? 'remove from queue' : 'add to Queue';
 
   return {
     img,
@@ -171,5 +203,6 @@ function parsedData(res, isWatched) {
     popularity,
     genres,
     watchText,
+    queueText,
   };
 }
