@@ -117,18 +117,24 @@ async function onOpen(event) {
     });
 
   // ссылка на кнопку закрытия
-  const closeBtnRef = document.querySelector('.close-icon');
-  const pathRef = document.querySelector('path');
+  const closeBtnRef = document.querySelectorAll('.js-close-btn');
   // слушатель на нажатие для закрытия модалки
-  closeBtnRef.addEventListener('click', onClose);
-  pathRef.addEventListener('click', onClose);
+  closeBtnRef.forEach(item => {
+    item.addEventListener('click', onClose);
+  });
   // во время когда модалка открыта - вешаем слушателя окно для закрытия по ESCAPE
   window.addEventListener('keydown', onClose);
 }
 
 // закрытие модалки по ESCAPE или кнопке
 function onClose(event) {
-  if (event.code === 'Escape' || event.target === event.currentTarget) {
+  console.log(event.target.nodeName);
+  if (
+    event.code === 'Escape' ||
+    event.target === event.currentTarget ||
+    event.code === 'SVG' ||
+    event.code === 'path'
+  ) {
     console.log('Закрыли кнопкой');
     instance.close();
   }
