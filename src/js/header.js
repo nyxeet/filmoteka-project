@@ -1,12 +1,20 @@
 import header from '../html/header.html';
 import { renderWatched, renderQueue } from './my-library';
-import { renderHomePage, renderHomeByQuery } from './main';
+import {
+  renderHomePage,
+  renderHomeByQuery,
+  renderHomePageByPageNum,
+  renderSearchPageByPageNum,
+} from './main';
+import paginationTemp from '../templates/paginator.hbs';
+import paginationFunc from './paginator';
 
 const wrapperRef = document.querySelector('.wrapper');
 const movieList = document.querySelector('.movies');
 
+const cen = document.querySelector('.cen');
 wrapperRef.innerHTML = header;
-const pag = document.querySelector('.paginator');
+//const pag = document.querySelector('.paginator');
 const logo = document.querySelector('.site-logo__link');
 const linkLibrary = document.querySelector('.nav-link-library');
 const linkMain = document.querySelector('.nav-link-home');
@@ -19,9 +27,16 @@ const formRef = document.querySelector('.search-form');
 const input = document.querySelector('.search-field');
 const warningRef = document.querySelector('.warning');
 
+renderHomePage();
+cen.innerHTML = paginationTemp({ totalPages: 1000 });
+paginationFunc(renderHomePageByPageNum);
+
 formRef.addEventListener('submit', event => {
   event.preventDefault();
-  renderHomeByQuery(input.value, warningRef);
+  renderHomeByQuery(input.value, warningRef).then(res => {
+    cen.innerHTML = paginationTemp({ totalPages: res.pages });
+    paginationFunc(renderSearchPageByPageNum, res.q);
+  });
   input.value = '';
 });
 
@@ -52,9 +67,11 @@ function mainRoute(event) {
   linkLibrary.classList.remove('current');
   queueBtnRef.classList.remove('active-control-btn');
   watchedBtnRef.classList.remove('active-control-btn');
-  pag.classList.remove('is-hidden');
+  cen.classList.remove('is-hidden');
   warningRef.classList.remove('warning-message');
   renderHomePage();
+  cen.innerHTML = paginationTemp({ totalPages: 1000 });
+  paginationFunc(renderHomePageByPageNum);
   window.history.replaceState({}, null, '/');
 }
 function myLibraryRoute(event) {
@@ -68,6 +85,6 @@ function myLibraryRoute(event) {
   linkMain.classList.remove('current');
   linkLibrary.classList.add('current');
   watchedBtnRef.classList.add('active-control-btn');
-  pag.classList.add('is-hidden');
+  cen.classList.add('is-hidden');
   window.history.replaceState({}, null, '/my-library');
 }

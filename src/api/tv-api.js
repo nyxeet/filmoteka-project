@@ -13,6 +13,12 @@ const fetchShowWithQuery = searchQuery => {
   ).then(res => res.json());
 };
 
+const fetchShowWithQueryByPage = (searchQuery, pageNum) => {
+  return fetch(
+    `${baseURL}/3/search/movie?query=${searchQuery}&api_key=${API_KEY}&page=${pageNum}`,
+  ).then(res => res.json());
+};
+
 const fetchPopular = () => {
   return fetch(
     `${baseURL}/3/trending/all/day?api_key=7f708811f1643542b21c8f4bf6e8e2f6`,
@@ -29,4 +35,5 @@ export default {
   fetchShowWithQuery,
   fetchPopular,
   fetchPopularByPage,
+  fetchShowWithQueryByPage,
 };
