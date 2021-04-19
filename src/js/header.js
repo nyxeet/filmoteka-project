@@ -34,8 +34,13 @@ paginationFunc(1000, renderHomePageByPageNum);
 formRef.addEventListener('submit', event => {
   event.preventDefault();
   renderHomeByQuery(input.value, warningRef).then(res => {
+    console.log(res.pages);
+    if (res.pages === 0) {
+      cen.innerHTML = '';
+      return;
+    }
     cen.innerHTML = paginationTemp({ totalPages: res.pages });
-    paginationFunc(res.pages, renderSearchPageByPageNum, res.q);
+    paginationFunc(res.pages, renderSearchPageByPageNum, res.query);
   });
   input.value = '';
 });

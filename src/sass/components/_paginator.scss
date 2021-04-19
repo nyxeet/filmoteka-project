@@ -3,7 +3,6 @@
   justify-content: center;
   align-items: center;
   margin-top: 50px;
-  margin-bottom: 60px;
 }
 .paginator {
   display: flex;
@@ -37,7 +36,7 @@
   padding-bottom: 10px;
   border-radius: 5px;
 
-  width: 40px;
+  min-width: 40px;
   height: 40px;
 
   font-size: 18px;
