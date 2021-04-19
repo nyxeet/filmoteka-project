@@ -2,13 +2,13 @@
   padding-top: 30px;
   padding-bottom: 28px;
 
-  background-color: #f7f7f7;
+  background-color: $footer-color;
 }
 
 .block {
   display: block;
 
-  font-family: Roboto;
+  font-family: $main-font;
   font-weight: 400;
   font-size: 14px;
   line-height: 1.1721;
