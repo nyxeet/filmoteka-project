@@ -1,6 +1,6 @@
 //import { renderHomePageByPageNum } from './main';
 
-export default function paginationFunc(callback, ...args) {
+export default function paginationFunc(max, callback, ...args) {
   const paginatorRef = document.querySelector('.paginator');
 
   const firstItem = document.querySelector('.firstItem');
@@ -114,15 +114,15 @@ export default function paginationFunc(callback, ...args) {
   }
 
   function showLastItems() {
-    paginatorCurrent < 1000
+    paginatorCurrent < max
       ? next.classList.remove('is-hidden')
       : next.classList.add('is-hidden');
 
-    paginatorCurrent < 999
+    paginatorCurrent < max - 1
       ? nextnext.classList.remove('is-hidden')
       : nextnext.classList.add('is-hidden');
 
-    if (paginatorCurrent < 998) {
+    if (paginatorCurrent < max - 2) {
       lastdots.classList.remove('is-hidden');
       lastItem.classList.remove('is-hidden');
       peginatorNext.classList.remove('is-hidden');

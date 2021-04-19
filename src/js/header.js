@@ -29,13 +29,13 @@ const warningRef = document.querySelector('.warning');
 
 renderHomePage();
 cen.innerHTML = paginationTemp({ totalPages: 1000 });
-paginationFunc(renderHomePageByPageNum);
+paginationFunc(1000, renderHomePageByPageNum);
 
 formRef.addEventListener('submit', event => {
   event.preventDefault();
   renderHomeByQuery(input.value, warningRef).then(res => {
     cen.innerHTML = paginationTemp({ totalPages: res.pages });
-    paginationFunc(renderSearchPageByPageNum, res.q);
+    paginationFunc(res.pages, renderSearchPageByPageNum, res.q);
   });
   input.value = '';
 });
@@ -71,7 +71,7 @@ function mainRoute(event) {
   warningRef.classList.remove('warning-message');
   renderHomePage();
   cen.innerHTML = paginationTemp({ totalPages: 1000 });
-  paginationFunc(renderHomePageByPageNum);
+  paginationFunc(1000, renderHomePageByPageNum);
   window.history.replaceState({}, null, '/');
 }
 function myLibraryRoute(event) {
