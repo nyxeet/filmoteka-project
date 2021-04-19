@@ -4,15 +4,16 @@ import placeholder from './spinner';
 
 function renderHomeByQuery(query, messageRef) {
   placeholder.spinner.show();
-  api
+  return api
     .fetchShowWithQuery(query)
-    .then(({ results }) => {
-      if (results.length === 0) {
+    .then(res => {
+      if (res.results.length === 0) {
         messageRef.classList.add('warning-message');
       } else {
         messageRef.classList.remove('warning-message');
       }
-      renderList(results);
+      renderList(res.results);
+      return { q: query, pages: res.total_pages };
     })
     .finally(() => placeholder.spinner.close());
 }
@@ -28,14 +29,30 @@ function renderHomePageByPageNum(pageNum) {
   window.scrollTo(0, 0);
 }
 
+function renderSearchPageByPageNum(query, pageNum) {
+  placeholder.spinner.show();
+  api
+    .fetchShowWithQueryByPage(query, pageNum)
+    .then(({ results }) => {
+      renderList(results);
+    })
+    .finally(() => placeholder.spinner.close());
+  window.scrollTo(0, 0);
+}
+
 function renderHomePage() {
   placeholder.spinner.show();
   api
     .fetchPopular()
-    .then(({ results }) => renderList(results))
+    .then(({ results }) => {
+      renderList(results);
+    })
     .finally(() => placeholder.spinner.close());
 }
 
-renderHomePage();
-
-export { renderHomePage, renderHomePageByPageNum, renderHomeByQuery };
+export {
+  renderHomePage,
+  renderHomePageByPageNum,
+  renderHomeByQuery,
+  renderSearchPageByPageNum,
+};
