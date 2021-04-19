@@ -22,25 +22,22 @@
 
   @media screen and (min-width: 1024px) {
     padding: 70px 15px 10px 15px;
-    width: 90%;
+    width: 960px;
   }
 
   @media screen and (min-width: 768px) and (max-width: 1023px) {
     padding: 70px 15px 10px 15px;
-    width: 80%;
+    width: 680px;
   }
 
   @media screen and (max-width: 767px) {
     padding: 48px 20px 41px 20px;
-    width: 70%;
+    width: 360px;
   }
 }
 
 .wrapper-title {
   @extend %flex-center;
-  // display: flex;
-  // text-align: center;
-  // justify-content: center;
 
   margin: 0 auto;
   margin-bottom: 30px;
@@ -57,6 +54,8 @@
 }
 
 .wrapper-title:hover {
+  width: 100%;
+
   @media screen and (max-width: 767px) {
     width: 75%;
   }
