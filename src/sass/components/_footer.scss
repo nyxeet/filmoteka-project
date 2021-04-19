@@ -1,43 +1,65 @@
-.film-footer {
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main {
+  /* Чтобы занимал оставшееся пространство */
+  flex-grow: 1;
+}
+
+footer {
+  /* Чтобы footer не уменьшался */
+  flex-shrink: 0;
+}
+
+.footer {
+  padding-top: 30px;
+  padding-bottom: 28px;
+  background-color: $footer-color;
+}
+
+.block {
+  display: block;
+
+  font-family: $main-font;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.1721;
+  text-align: center;
+
+  @media screen and (min-width: 768px) {
+    display: flex;
+    justify-content: center;
+
+    font-size: 16px;
+    line-height: 1.1718;
+  }
+}
+
+.text {
+  margin-top: 0px;
+  margin-bottom: 9.9px;
+
+  @media screen and (min-width: 768px) {
+    margin-bottom: 0px;
+    margin-right: 4px;
+  }
+}
+
+.mob-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-direction: column;
-  height: 77px;
-  background: $footer-color;
-  font-family: 'Roboto', sans-serif;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 14px;
-  line-height: 16px;
-  color: #545454;
+}
 
-  &__icon {
-    margin-left: 10px;
-    margin-right: 10px;
-    fill: $secondary-color;
-  }
-  &__link {
-    color: #545454;
-    margin-left: 3px;
-  }
+.develop-text {
+  margin-top: 0px;
+  margin-bottom: 0px;
+  margin-right: 10px;
 }
-@media (min-width: 50px) {
-  .film-footer {
-    max-width: 100%;
-  }
-  .forMobile {
-    margin-bottom: 10px;
-  }
-}
-@media (min-width: 768px) {
-  .film-footer {
-    flex-direction: row;
-  }
-  .forMobile {
-    margin-bottom: 0px;
-  }
-  .forDesktop {
-    margin-left: 3px;
-  }
+
+.heart-svg {
+  margin-right: 10px;
 }
