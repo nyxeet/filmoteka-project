@@ -13,7 +13,7 @@ function renderHomeByQuery(query, messageRef) {
         messageRef.classList.remove('warning-message');
       }
       renderList(res.results);
-      return { q: query, pages: res.total_pages };
+      return { query: query, pages: res.total_pages };
     })
     .finally(() => placeholder.spinner.close());
 }
