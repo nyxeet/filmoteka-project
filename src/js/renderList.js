@@ -39,6 +39,8 @@ function parseData(data) {
       .join(', ');
   } else if (typeof gen[0] === 'object') {
     genresStr = gen.map(genre => genre.name).join(', ');
+  } else {
+    genresStr = 'No information';
   }
 
   // const genresStr = gen

@@ -1,8 +1,4 @@
-//import { renderHomePageByPageNum } from './main';
-
 export default function paginationFunc(max, callback, ...args) {
-  const paginatorRef = document.querySelector('.paginator');
-
   const firstItem = document.querySelector('.firstItem');
   const peginatorPrev = document.querySelector('.paginator-previous');
   const peginatorNext = document.querySelector('.paginator-next');
@@ -17,6 +13,26 @@ export default function paginationFunc(max, callback, ...args) {
   const nextnext = document.querySelector('.nextnext');
   const pages = document.querySelector('.pages');
   const lastItem = document.querySelector('.lastItem');
+
+  if (max === 1) {
+    next.classList.add('is-hidden');
+    nextnext.classList.add('is-hidden');
+    lastdots.classList.add('is-hidden');
+    peginatorNext.classList.add('is-hidden');
+    lastItem.classList.add('is-hidden');
+  }
+
+  if (max === 2) {
+    lastdots.classList.add('is-hidden');
+    peginatorNext.classList.add('is-hidden');
+    lastItem.classList.add('is-hidden');
+    nextnext.classList.add('is-hidden');
+  }
+  if (max === 3) {
+    lastdots.classList.add('is-hidden');
+    peginatorNext.classList.add('is-hidden');
+    lastItem.classList.add('is-hidden');
+  }
 
   let paginatorCurrent = 1;
 
