@@ -1,0 +1,87 @@
+.cen {
+  @extend %flex-center;
+
+  margin-top: 50px;
+
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 1.33;
+}
+.paginator {
+  @extend %flex-center;
+}
+.is-hidden {
+  display: none;
+}
+.pages {
+  @extend %flex-center;
+}
+
+.paginator-page-first {
+  color: #fff;
+}
+
+.paginator-page {
+  color: #000;
+  cursor: pointer;
+
+  padding: 10px;
+
+  transition: all 200ms ease-in;
+
+  @media screen and (max-width: 767px) {
+    padding: 6px;
+  }
+}
+
+.paginator-page:hover {
+  font-weight: 700;
+}
+
+.paginator-current:hover,
+.lastdots:hover {
+  font-weight: 500;
+}
+
+.paginator-current {
+  @extend %flex-center;
+
+  border-radius: 5px;
+  min-width: 40px;
+  height: 40px;
+
+  color: white;
+  background-color: $secondary-color;
+  pointer-events: none;
+}
+
+.paginator-previous,
+.paginator-next {
+  color: black;
+  background-color: #f7f7f7;
+}
+.pagination-btn {
+  @extend %flex-center;
+
+  min-width: 40px;
+  height: 40px;
+
+  background: $footer-color;
+  border-radius: 5px;
+  transition: all 250ms ease-in;
+}
+
+.pagination-svg {
+  stroke: #000;
+  transition: all 150ms ease-in;
+}
+
+.pagination-btn:hover {
+  background-color: $secondary-color;
+}
+
+.pagination-btn:hover .pagination-svg {
+  stroke: #fff;
+}

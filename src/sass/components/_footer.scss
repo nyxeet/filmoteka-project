@@ -1,0 +1,73 @@
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main {
+  /* Чтобы занимал оставшееся пространство */
+  flex-grow: 1;
+}
+
+footer {
+  /* Чтобы footer не уменьшался */
+  flex-shrink: 0;
+}
+
+.footer {
+  padding-top: 30px;
+  padding-bottom: 28px;
+  background-color: $footer-color;
+}
+
+.block {
+  display: block;
+
+  font-family: $main-font;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.1721;
+  text-align: center;
+
+  @media screen and (min-width: 768px) {
+    display: flex;
+    justify-content: center;
+
+    font-size: 16px;
+    line-height: 1.1718;
+  }
+}
+
+.text {
+  margin-top: 0px;
+  margin-bottom: 9.9px;
+
+  @media screen and (min-width: 768px) {
+    margin-bottom: 0px;
+    margin-right: 4px;
+  }
+}
+
+.mob-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.develop-text {
+  margin-top: 0px;
+  margin-bottom: 0px;
+  margin-right: 10px;
+}
+
+.heart-svg {
+  margin-right: 10px;
+}
+
+.open-modal-develop {
+  cursor: pointer;
+}
+
+.open-modal-develop:hover {
+  font-weight: 600;
+}
