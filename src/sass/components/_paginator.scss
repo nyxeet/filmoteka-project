@@ -30,6 +30,10 @@
   padding: 10px;
 
   transition: all 200ms ease-in;
+
+  @media screen and (max-width: 767px) {
+    padding: 6px;
+  }
 }
 
 .paginator-page:hover {
@@ -50,6 +54,7 @@
 
   color: white;
   background-color: $secondary-color;
+  pointer-events: none;
 }
 
 .paginator-previous,
