@@ -1,6 +1,10 @@
 .main {
-  padding-top: 60px;
-  margin-bottom: 60px;
+  padding-top: 20px;
+  padding-bottom: 40px;
+  @media screen and (min-width: 768px) {
+    padding-top: 60px;
+    padding-bottom: 60px;
+  }
 }
 .movies {
   list-style-type: none;
@@ -15,7 +19,9 @@
     margin-bottom: 20px;
     cursor: pointer;
     transition: transform 250ms cubic-bezier(0.4, 0, 0.2, 1);
-    &:hover {
+
+    &:hover,
+    &:focus {
       transform: scale(1.03);
     }
 
@@ -41,6 +47,7 @@
     right: 0;
     display: block;
     object-fit: cover;
+    border-radius: 5px;
   }
 }
 
@@ -60,6 +67,7 @@
   line-height: 16px;
   color: #ff6b08;
 }
+
 .line {
   margin-right: 2px;
   margin-left: 2px;
@@ -70,4 +78,19 @@
   font-size: 24px;
   color: #ff6b08;
   text-align: center;
+}
+
+.year {
+  margin-right: 6px;
+}
+.card-rating {
+  display: inline-block;
+  text-align: center;
+  font-size: 12px;
+  line-height: 12px;
+  padding: 3px 8px 2px;
+  min-width: 36px;
+  background-color: #ff6b08;
+  color: #fff;
+  border-radius: 6px;
 }

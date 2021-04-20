@@ -39,6 +39,9 @@
 .paginator-current:hover,
 .lastdots:hover {
   font-weight: 500;
+  // @media screen and (max-width: 425px) {
+  //   padding: 6px;
+  // }
 }
 
 .paginator-current {
@@ -55,6 +58,7 @@
 .paginator-previous,
 .paginator-next {
   color: black;
+  background-color: #f7f7f7;
 }
 .pagination-btn {
   @extend %flex-center;

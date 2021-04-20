@@ -1,10 +1,17 @@
 import genres from './genres';
 import filmCard from '../templates/movie-card.hbs';
+import watchedCard from '../templates/movie-watched-card.hbs';
 const moviesRef = document.querySelector('.movies');
 
 function renderList(results) {
   const data = results.map(item => parseData(item));
   const markup = data.map(item => filmCard(item)).join('');
+  moviesRef.innerHTML = markup;
+}
+
+function renderWatchedList(results) {
+  const data = results.map(item => parseData(item));
+  const markup = data.map(item => watchedCard(item)).join('');
   moviesRef.innerHTML = markup;
 }
 
@@ -43,15 +50,7 @@ function parseData(data) {
     genresStr = 'No information';
   }
 
-  // const genresStr = gen
-  //   .map(item => {
-  //     const genre = genres.find(genre => genre.id === item);
-  //     if (genre) {
-  //       return genre.name;
-  //     }
-  //   })
-  //   .filter(item => item)
-  //   .join(', ');
+  const rating = data.vote_average || 'No info';
 
   return {
     id,
@@ -60,7 +59,8 @@ function parseData(data) {
     url,
     year,
     genresStr,
+    rating,
   };
 }
 
-export { renderList };
+export { renderList, renderWatchedList };
