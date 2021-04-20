@@ -43,25 +43,27 @@ async function onOpen(event) {
   await api.fetchShowDetails(mediaType, filmId).then(res => {
     obj = res;
     obj.media_type = mediaType;
-    //console.log(obj);
+
     const arrWatched = JSON.parse(localStorage.getItem('watched'));
     let isWatched = false;
     if (arrWatched) {
       isWatched = arrWatched.find(item => item.id == obj.id) ? true : false;
     }
-    console.log(isWatched);
 
     let inQueue = false;
     const arrQueue = JSON.parse(localStorage.getItem('queue'));
     if (arrQueue) {
       inQueue = arrQueue.find(item => item.id == obj.id) ? true : false;
     }
-    console.log(inQueue);
+
     const data = parsedData(res);
     const markup = modalTemplate(data);
     instance = basicLightbox.create(markup);
     // показываем модалку
     instance.show();
+
+    const wRef = document.querySelector('#js-watched');
+    const qRef = document.querySelector('#js-queue');
 
     const watchedAddBtnRef = document.querySelector('.watched-add');
     const watchedRemoveBtnRef = document.querySelector('.watched-remove');
@@ -81,10 +83,9 @@ async function onOpen(event) {
       watchedRemoveBtnRef.classList.remove('is-hidden');
 
       isWatched = true;
-      if (window.location.href.endsWith('my-library')) {
+      if (wRef.classList.contains('active-control-btn')) {
         renderWatched();
       }
-      console.log('watched', isWatched);
     });
     watchedRemoveBtnRef.addEventListener('click', () => {
       storageWatched = JSON.parse(localStorage.getItem('watched'));
@@ -97,11 +98,11 @@ async function onOpen(event) {
       }
       watchedRemoveBtnRef.classList.add('is-hidden');
       watchedAddBtnRef.classList.remove('is-hidden');
-      if (window.location.href.endsWith('my-library')) {
+      isWatched = false;
+
+      if (wRef.classList.contains('active-control-btn')) {
         renderWatched();
       }
-      isWatched = false;
-      console.log('watched', isWatched);
     });
 
     const queueAddBtnRef = document.querySelector('.queue-add');
@@ -121,7 +122,7 @@ async function onOpen(event) {
       queueRemoveBtnRef.classList.remove('is-hidden');
 
       inQueue = true;
-      if (window.location.href.endsWith('my-library')) {
+      if (qRef.classList.contains('active-control-btn')) {
         renderQueue();
       }
     });
@@ -136,44 +137,13 @@ async function onOpen(event) {
       }
       queueRemoveBtnRef.classList.add('is-hidden');
       queueAddBtnRef.classList.remove('is-hidden');
-      if (window.location.href.endsWith('my-library')) {
+      inQueue = false;
+
+      if (qRef.classList.contains('active-control-btn')) {
         renderQueue();
       }
-      inQueue = false;
     });
   });
-  // .then(inQueue => {
-  //   const queueBtnRef = document.querySelector('.queueBtn');
-  //   if (inQueue) {
-  //     queueBtnRef.classList.add('btn-active');
-  //   }
-  //   queueBtnRef.addEventListener('click', () => {
-  //     if (!inQueue) {
-  //       queueBtnRef.classList.add('btn-active');
-  //       if (localStorage.getItem('queue')) {
-  //         storageQueue = JSON.parse(localStorage.getItem('queue'));
-  //       }
-  //       storageQueue.push(obj);
-  //       localStorage.setItem('queue', JSON.stringify(storageQueue));
-  //       queueBtnRef.disabled = true;
-  //       queueBtnRef.textContent = 'Added to queue';
-  //     } else {
-  //       storageQueue = JSON.parse(localStorage.getItem('queue'));
-  //       const index = storageQueue.findIndex(item => item.id == inQueue.id);
-  //       storageQueue.splice(index, 1);
-  //       if (storageQueue.length === 0) {
-  //         localStorage.removeItem('queue');
-  //       } else {
-  //         localStorage.setItem('queue', JSON.stringify(storageQueue));
-  //       }
-  //       queueBtnRef.disabled = true;
-  //       queueBtnRef.textContent = 'Removed from queue';
-  //       if (window.location.href.endsWith('my-library')) {
-  //         renderQueue();
-  //       }
-  //     }
-  //   });
-  // });
 
   // ссылка на кнопку закрытия
   const closeBtnRef = document.querySelectorAll('.js-close-btn');
@@ -224,8 +194,6 @@ function parsedData(res, isWatched, inQueue) {
   const genres = res.genres
     ? res.genres.map(item => item.name).join(', ')
     : 'No information';
-  // const watchText = isWatched ? 'remove from watched' : 'add to Watched';
-  //const queueText = inQueue ? 'remove from queue' : 'add to Queue';
 
   return {
     img,
@@ -237,7 +205,5 @@ function parsedData(res, isWatched, inQueue) {
     voteCount,
     popularity,
     genres,
-    // watchText,
-    //queueText,
   };
 }
