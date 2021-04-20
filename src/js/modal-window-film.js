@@ -40,111 +40,106 @@ async function onOpen(event) {
   const mediaType = target.dataset.type;
 
   // вызываем api и ищем по id в базе наш фильм
-  await api
-    .fetchShowDetails(mediaType, filmId)
-    .then(res => {
-      obj = res;
-      obj.media_type = mediaType;
-      console.log(obj);
-      const arrWatched = JSON.parse(localStorage.getItem('watched'));
-      let isWatched;
-      if (arrWatched) {
-        isWatched = arrWatched.find(item => item.id == res.id);
-      }
-      let inQueue;
-      const arrQueue = JSON.parse(localStorage.getItem('queue'));
-      if (arrQueue) {
-        inQueue = arrQueue.find(item => item.id == res.id);
-      }
+  await api.fetchShowDetails(mediaType, filmId).then(res => {
+    obj = res;
+    obj.media_type = mediaType;
+    console.log(obj);
+    const arrWatched = JSON.parse(localStorage.getItem('watched'));
+    let isWatched;
+    if (arrWatched) {
+      isWatched = arrWatched.find(item => item.id == res.id);
+    }
 
-      // парсим данные
-      const data = parsedData(res, isWatched, inQueue);
+    let inQueue;
+    const arrQueue = JSON.parse(localStorage.getItem('queue'));
+    if (arrQueue) {
+      inQueue = arrQueue.find(item => item.id == res.id);
+    }
 
-      return { data, isWatched, inQueue };
-    })
-    .then(({ data, isWatched, inQueue }) => {
-      // получаем data и рисуем разметку страницы
+    const data = parsedData(res);
+    const markup = modalTemplate(data);
+    instance = basicLightbox.create(markup);
+    // показываем модалку
+    instance.show();
 
-      const markup = modalTemplate(data);
-      console.log(data);
-
-      return { markup, isWatched, inQueue };
-    })
-    .then(({ markup, isWatched, inQueue }) => {
-      // создаем плагин basicLightbox и передаем в него разметку
-      instance = basicLightbox.create(markup);
-      // показываем модалку
-      instance.show();
-      return { isWatched, inQueue };
-    })
-    .then(({ isWatched, inQueue }) => {
-      const watchedBtnRef = document.querySelector('.watchedBtn');
-      if (isWatched) {
-        watchedBtnRef.classList.add('btn-active');
-      }
-
-      watchedBtnRef.addEventListener('click', () => {
-        if (!isWatched) {
-          watchedBtnRef.classList.add('btn-active');
-          if (localStorage.getItem('watched')) {
-            storageWatched = JSON.parse(localStorage.getItem('watched'));
-          }
-          storageWatched.push(obj);
-          localStorage.setItem('watched', JSON.stringify(storageWatched));
-          watchedBtnRef.disabled = true;
-          watchedBtnRef.textContent = 'Added to watched';
-        } else {
+    const watchedAddBtnRef = document.querySelector('.watched-add');
+    const watchedRemoveBtnRef = document.querySelector('.watched-remove');
+    if (isWatched) {
+      watchedAddBtnRef.classList.add('is-hidden');
+    } else {
+      watchedRemoveBtnRef.classList.add('is-hidden');
+    }
+    // if (isWatched) {
+    //   watchedBtnRef.classList.add('btn-active');
+    // }
+    watchedAddBtnRef.addEventListener('click', () => {
+      if (!isWatched) {
+        //watchedBtnRef.classList.add('btn-active');
+        if (localStorage.getItem('watched')) {
           storageWatched = JSON.parse(localStorage.getItem('watched'));
-          const index = storageWatched.findIndex(
-            item => item.id == isWatched.id,
-          );
-          storageWatched.splice(index, 1);
-          if (storageWatched.length === 0) {
-            localStorage.removeItem('watched');
-          } else {
-            localStorage.setItem('watched', JSON.stringify(storageWatched));
-          }
-          watchedBtnRef.disabled = true;
-          watchedBtnRef.textContent = 'Removed from watched';
-          if (window.location.href.endsWith('my-library')) {
-            renderWatched();
-          }
         }
-      });
-      return inQueue;
-    })
-    .then(inQueue => {
-      const queueBtnRef = document.querySelector('.queueBtn');
-      if (inQueue) {
-        queueBtnRef.classList.add('btn-active');
+        storageWatched.push(obj);
+        localStorage.setItem('watched', JSON.stringify(storageWatched));
+        watchedAddBtnRef.classList.add('is-hidden');
+        watchedRemoveBtnRef.classList.remove('is-hidden');
       }
-      queueBtnRef.addEventListener('click', () => {
-        if (!inQueue) {
-          queueBtnRef.classList.add('btn-active');
-          if (localStorage.getItem('queue')) {
-            storageQueue = JSON.parse(localStorage.getItem('queue'));
-          }
-          storageQueue.push(obj);
-          localStorage.setItem('queue', JSON.stringify(storageQueue));
-          queueBtnRef.disabled = true;
-          queueBtnRef.textContent = 'Added to queue';
-        } else {
-          storageQueue = JSON.parse(localStorage.getItem('queue'));
-          const index = storageQueue.findIndex(item => item.id == inQueue.id);
-          storageQueue.splice(index, 1);
-          if (storageQueue.length === 0) {
-            localStorage.removeItem('queue');
-          } else {
-            localStorage.setItem('queue', JSON.stringify(storageQueue));
-          }
-          queueBtnRef.disabled = true;
-          queueBtnRef.textContent = 'Removed from queue';
-          if (window.location.href.endsWith('my-library')) {
-            renderQueue();
-          }
-        }
-      });
+      isWatched = true;
+      if (window.location.href.endsWith('my-library')) {
+        renderWatched();
+      }
     });
+    watchedRemoveBtnRef.addEventListener('click', () => {
+      storageWatched = JSON.parse(localStorage.getItem('watched'));
+      console.log(storageWatched);
+      const index = storageWatched.findIndex(item => item.id == isWatched.id);
+      storageWatched.splice(index, 1);
+      if (storageWatched.length === 0) {
+        localStorage.removeItem('watched');
+      } else {
+        localStorage.setItem('watched', JSON.stringify(storageWatched));
+      }
+      watchedRemoveBtnRef.classList.add('is-hidden');
+      watchedAddBtnRef.classList.remove('is-hidden');
+      if (window.location.href.endsWith('my-library')) {
+        renderWatched();
+      }
+      isWatched = false;
+    });
+
+    return inQueue;
+  });
+  // .then(inQueue => {
+  //   const queueBtnRef = document.querySelector('.queueBtn');
+  //   if (inQueue) {
+  //     queueBtnRef.classList.add('btn-active');
+  //   }
+  //   queueBtnRef.addEventListener('click', () => {
+  //     if (!inQueue) {
+  //       queueBtnRef.classList.add('btn-active');
+  //       if (localStorage.getItem('queue')) {
+  //         storageQueue = JSON.parse(localStorage.getItem('queue'));
+  //       }
+  //       storageQueue.push(obj);
+  //       localStorage.setItem('queue', JSON.stringify(storageQueue));
+  //       queueBtnRef.disabled = true;
+  //       queueBtnRef.textContent = 'Added to queue';
+  //     } else {
+  //       storageQueue = JSON.parse(localStorage.getItem('queue'));
+  //       const index = storageQueue.findIndex(item => item.id == inQueue.id);
+  //       storageQueue.splice(index, 1);
+  //       if (storageQueue.length === 0) {
+  //         localStorage.removeItem('queue');
+  //       } else {
+  //         localStorage.setItem('queue', JSON.stringify(storageQueue));
+  //       }
+  //       queueBtnRef.disabled = true;
+  //       queueBtnRef.textContent = 'Removed from queue';
+  //       if (window.location.href.endsWith('my-library')) {
+  //         renderQueue();
+  //       }
+  //     }
+  //   });
+  // });
 
   // ссылка на кнопку закрытия
   const closeBtnRef = document.querySelector('.close-icon');
@@ -189,8 +184,8 @@ function parsedData(res, isWatched, inQueue) {
   const genres = res.genres
     ? res.genres.map(item => item.name).join(', ')
     : 'No information';
-  const watchText = isWatched ? 'remove from watched' : 'add to Watched';
-  const queueText = inQueue ? 'remove from queue' : 'add to Queue';
+  // const watchText = isWatched ? 'remove from watched' : 'add to Watched';
+  //const queueText = inQueue ? 'remove from queue' : 'add to Queue';
 
   return {
     img,
@@ -202,7 +197,7 @@ function parsedData(res, isWatched, inQueue) {
     voteCount,
     popularity,
     genres,
-    watchText,
-    queueText,
+    // watchText,
+    //queueText,
   };
 }
