@@ -61,8 +61,6 @@
 }
 
 .info {
-  display: flex;
-  align-items: center;
   font-family: $main-font;
   font-weight: 500;
   font-size: 12px;
@@ -82,15 +80,16 @@
   text-align: center;
 }
 
+.year {
+  margin-right: 6px;
+}
 .card-rating {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  display: inline-block;
+  text-align: center;
   font-size: 12px;
   line-height: 12px;
   padding: 3px 8px 2px;
   min-width: 36px;
-  margin-left: 10px;
   background-color: #ff6b08;
   color: #fff;
   border-radius: 6px;
