@@ -1,4 +1,4 @@
-import { renderList } from './renderList';
+import { renderWatchedList } from './renderList';
 
 const movieList = document.querySelector('.movies');
 
@@ -10,7 +10,7 @@ function renderWatched() {
     return;
   }
   const data = onlyUnique(array);
-  renderList(data);
+  renderWatchedList(data);
 }
 
 function renderQueue() {
@@ -21,7 +21,7 @@ function renderQueue() {
     return;
   }
   const data = onlyUnique(array);
-  renderList(data);
+  renderWatchedList(data);
 }
 
 function onlyUnique(array) {
