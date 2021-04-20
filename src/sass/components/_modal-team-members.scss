@@ -1,0 +1,343 @@
+.backdpor-team {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 100;
+
+  background: white;
+}
+
+.modal-team {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  border-radius: 20px;
+  background-color: #7c7c80;
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.12), 0px 1px 1px rgba(0, 0, 0, 0.14),
+    0px 2px 1px rgba(0, 0, 0, 0.2);
+
+  @media screen and (min-width: 1024px) {
+    padding: 70px 15px 10px 15px;
+    width: 960px;
+  }
+
+  @media screen and (min-width: 768px) and (max-width: 1023px) {
+    padding: 70px 15px 10px 15px;
+    width: 680px;
+  }
+
+  @media screen and (max-width: 767px) {
+    padding: 48px 20px 41px 20px;
+    width: 360px;
+  }
+}
+
+.wrapper-title {
+  @extend %flex-center;
+
+  margin: 0 auto;
+  margin-bottom: 30px;
+
+  width: 70%;
+  padding: 15px 30px;
+  border: 3px solid #b7b7bd;
+  border-radius: 40px;
+
+  background: $primary-color;
+  cursor: pointer;
+
+  transition: all 250ms ease-in;
+}
+
+.wrapper-title:hover {
+  width: 100%;
+
+  @media screen and (max-width: 767px) {
+    width: 75%;
+  }
+}
+
+.wrapper-title:hover ~ .quote-box {
+  opacity: 1;
+}
+
+.quote-box {
+  color: $primary-color;
+  opacity: 0;
+  transition: all 250ms ease-in;
+}
+
+.member-pic-box {
+  overflow: hidden;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  @media screen and (max-width: 767px) {
+    display: none;
+  }
+}
+
+.member-image {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.team-list {
+  @extend %flex-center;
+  flex-wrap: wrap;
+}
+
+.team-item {
+  background: $primary-color;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+  border: 3px solid #b7b7bd;
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.12), 0px 1px 1px rgba(0, 0, 0, 0.14),
+    0px 2px 1px rgba(0, 0, 0, 0.2);
+  transition: all 250ms ease-in;
+
+  @media screen and (min-width: 1024px) {
+    width: calc((100% - 60px) / 7);
+  }
+
+  @media screen and (min-width: 768px) and (max-width: 1023px) {
+    width: calc((100% - 60px) / 3);
+  }
+
+  @media screen and (max-width: 767px) {
+    width: calc((100% - 60px) / 1);
+    padding-top: 15px;
+  }
+}
+
+.team-item:not(:last-child) {
+  @media screen and (max-width: 767px) {
+    margin-bottom: 15px;
+  }
+
+  @media screen and (min-width: 1024px) {
+    margin-right: 10px;
+  }
+}
+
+.team-item:first-child {
+  @media screen and (min-width: 768px) and (max-width: 1023px) {
+    width: 220px;
+    margin-right: 150px;
+    margin-left: 150px;
+  }
+}
+
+.team-item:not(:nth-of-type(1), :nth-of-type(4), :nth-of-type(7)) {
+  @media screen and (min-width: 768px) and (max-width: 1023px) {
+    margin-right: 10px;
+  }
+}
+
+.team-item:nth-last-child(n + 4) {
+  @media screen and (min-width: 768px) and (max-width: 1023px) {
+    margin-bottom: 10px;
+  }
+}
+
+.team-item:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(233, 226, 226, 0.75);
+}
+
+.team-item:hover .member-name {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.team-item:hover .male-eye-svg {
+  fill: $primary-text-color;
+}
+
+.quote-box {
+  text-align: right;
+}
+
+.member-info {
+  @extend %flex-center;
+  flex-direction: column;
+
+  margin-bottom: 10px;
+
+  @media screen and(max-width: 767px) {
+    margin-bottom: 20px;
+  }
+}
+
+.member-name {
+  margin-bottom: 10px;
+  font-size: 18px;
+  font-weight: 500;
+
+  transition: all 200ms ease-in;
+}
+
+.member-name.person1 {
+  color: $member-color-1st;
+}
+.member-name.person2 {
+  color: $member-color-2nd;
+}
+.member-name.person3 {
+  color: $member-color-3rd;
+}
+.member-name.person4 {
+  color: $member-color-4th;
+}
+.member-name.person5 {
+  color: $member-color-5th;
+}
+.member-name.person6 {
+  color: $member-color-6th;
+}
+.member-name.person7 {
+  color: $member-color-7th;
+}
+
+.member-role {
+  width: 100%;
+
+  text-align: center;
+  color: $primary-color;
+  font-size: 16px;
+  font-weight: 600;
+  padding-top: 6px;
+  padding-bottom: 6px;
+}
+
+.member-role.person1 {
+  background: $member-color-1st;
+  background-image: linear-gradient(to right, $member-color-1st, #cf9c88);
+}
+.member-role.person2 {
+  background: $member-color-2nd;
+  background-image: linear-gradient(to right, $member-color-2nd, #cf9c88);
+}
+.member-role.person3 {
+  background: $member-color-3rd;
+  background-image: linear-gradient(to right, $member-color-3rd, #cf9c88);
+}
+.member-role.person4 {
+  background: $member-color-4th;
+  background-image: linear-gradient(to right, $member-color-4th, #cf9c88);
+}
+.member-role.person5 {
+  background: $member-color-5th;
+  background-image: linear-gradient(to right, $member-color-5th, #cf9c88);
+}
+.member-role.person6 {
+  background: $member-color-6th;
+  background-image: linear-gradient(to right, $member-color-6th, #cf9c88);
+}
+.member-role.person7 {
+  background: $member-color-7th;
+  background-image: linear-gradient(to right, $member-color-7th, #cf9c88);
+}
+
+.wrapper-description {
+  margin-bottom: 30px;
+}
+
+.member-social {
+  @extend %flex-center;
+  margin-bottom: 10px;
+
+  @media screen and(max-width: 767px) {
+    margin-bottom: 20px;
+  }
+}
+
+.social-svg:first-child {
+  margin-right: 15px;
+
+  @media screen and (max-width: 767px) {
+    margin-right: 50px;
+  }
+}
+
+.social-img {
+  width: 30px;
+  height: 30px;
+}
+
+.svg-icon {
+  fill: rgb(9.411765%, 8.627451%, 8.627451%);
+  transition: all 250ms ease-in;
+}
+
+.social-svg:hover .svg-icon {
+  transform: rotateY(360deg) scale(1.05);
+}
+
+.social-svg:hover .svg-icon .person1 {
+  fill: $member-color-1st;
+}
+.social-svg:hover .svg-icon .person2 {
+  fill: #b53f10;
+}
+.social-svg:hover .svg-icon .person3 {
+  fill: #b53f10;
+}
+.social-svg:hover .svg-icon .person4 {
+  fill: #b53f10;
+}
+.social-svg:hover .svg-icon .person5 {
+  fill: #b53f10;
+}
+.social-svg:hover .svg-icon .person6 {
+  fill: #b53f10;
+}
+.social-svg:hover .svg-icon .person7 {
+  fill: #b53f10;
+}
+
+.contact-us {
+  font-size: 20px;
+  font-weight: 400;
+  font-style: italic;
+  color: $primary-color;
+  text-align: center;
+
+  margin-bottom: 10px;
+}
+
+.male-eye-svg {
+  fill: transparent;
+  transition: all 250ms ease-in;
+}
+
+.close-div-team {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: $primary-color;
+  border: 3px solid #b7b7bd;
+  border-radius: 50%;
+  transition: all 250ms ease-in;
+}
+
+.js-close-team-btn {
+  transition: all 250ms ease-in;
+}
+
+.close-div-team:hover {
+  cursor: pointer;
+  background: #b7b7bd;
+  border: 3px solid $primary-color;
+}
+
+.close-div-team:hover .js-close-team-btn {
+  stroke: $primary-color;
+}
