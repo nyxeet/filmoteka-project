@@ -1,50 +1,81 @@
 .cen {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  @extend %flex-center;
+
   margin-top: 50px;
+
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 1.33;
 }
 .paginator {
-  display: flex;
-  font-size: 16px;
-  text-align: center;
+  @extend %flex-center;
 }
 .is-hidden {
   display: none;
 }
 .pages {
-  display: flex;
+  @extend %flex-center;
 }
 
 .paginator-page-first {
-  color: white;
+  color: #fff;
 }
+
 .paginator-page {
-  font-family: Roboto, sans-serif;
-  font-size: 16px;
-  font-weight: 500;
-  line-height: 1.33;
-  color: black;
+  color: #000;
   cursor: pointer;
 
   padding: 10px;
+
+  transition: all 200ms ease-in;
 }
+
+.paginator-page:hover {
+  font-weight: 700;
+}
+
+.paginator-current:hover,
+.lastdots:hover {
+  font-weight: 500;
+}
+
 .paginator-current {
-  display: inline-block;
+  @extend %flex-center;
 
-  padding-top: 10px;
-  padding-bottom: 10px;
   border-radius: 5px;
-
   min-width: 40px;
   height: 40px;
 
-  font-size: 18px;
   color: white;
-  background-color: #ff6b08;
+  background-color: $secondary-color;
 }
 
 .paginator-previous,
 .paginator-next {
   color: black;
+}
+.pagination-btn {
+  @extend %flex-center;
+
+  min-width: 40px;
+  height: 40px;
+
+  background: $footer-color;
+  border-radius: 5px;
+  transition: all 250ms ease-in;
+}
+
+.pagination-svg {
+  stroke: #000;
+  transition: all 150ms ease-in;
+}
+
+.pagination-btn:hover {
+  background-color: $secondary-color;
+}
+
+.pagination-btn:hover .pagination-svg {
+  stroke: #fff;
 }
