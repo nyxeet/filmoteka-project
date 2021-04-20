@@ -1,6 +1,10 @@
 .main {
-  padding-top: 60px;
-  margin-bottom: 60px;
+  padding-top: 20px;
+  padding-bottom: 40px;
+  @media screen and (min-width: 768px) {
+    padding-top: 60px;
+    padding-bottom: 60px;
+  }
 }
 .movies {
   list-style-type: none;
@@ -57,12 +61,15 @@
 }
 
 .info {
+  display: flex;
+  align-items: center;
   font-family: $main-font;
   font-weight: 500;
   font-size: 12px;
   line-height: 16px;
   color: #ff6b08;
 }
+
 .line {
   margin-right: 2px;
   margin-left: 2px;
@@ -73,4 +80,18 @@
   font-size: 24px;
   color: #ff6b08;
   text-align: center;
+}
+
+.card-rating {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+  line-height: 12px;
+  padding: 3px 8px 2px;
+  min-width: 36px;
+  margin-left: 10px;
+  background-color: #ff6b08;
+  color: #fff;
+  border-radius: 6px;
 }

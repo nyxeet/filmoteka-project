@@ -43,19 +43,20 @@ async function onOpen(event) {
   await api.fetchShowDetails(mediaType, filmId).then(res => {
     obj = res;
     obj.media_type = mediaType;
-    console.log(obj);
+    //console.log(obj);
     const arrWatched = JSON.parse(localStorage.getItem('watched'));
-    let isWatched;
+    let isWatched = false;
     if (arrWatched) {
-      isWatched = arrWatched.find(item => item.id == res.id);
+      isWatched = arrWatched.find(item => item.id == obj.id) ? true : false;
     }
+    console.log(isWatched);
 
-    let inQueue;
+    let inQueue = false;
     const arrQueue = JSON.parse(localStorage.getItem('queue'));
     if (arrQueue) {
-      inQueue = arrQueue.find(item => item.id == res.id);
+      inQueue = arrQueue.find(item => item.id == obj.id) ? true : false;
     }
-
+    console.log(inQueue);
     const data = parsedData(res);
     const markup = modalTemplate(data);
     instance = basicLightbox.create(markup);
@@ -69,29 +70,25 @@ async function onOpen(event) {
     } else {
       watchedRemoveBtnRef.classList.add('is-hidden');
     }
-    // if (isWatched) {
-    //   watchedBtnRef.classList.add('btn-active');
-    // }
+
     watchedAddBtnRef.addEventListener('click', () => {
-      if (!isWatched) {
-        //watchedBtnRef.classList.add('btn-active');
-        if (localStorage.getItem('watched')) {
-          storageWatched = JSON.parse(localStorage.getItem('watched'));
-        }
-        storageWatched.push(obj);
-        localStorage.setItem('watched', JSON.stringify(storageWatched));
-        watchedAddBtnRef.classList.add('is-hidden');
-        watchedRemoveBtnRef.classList.remove('is-hidden');
+      if (localStorage.getItem('watched')) {
+        storageWatched = JSON.parse(localStorage.getItem('watched'));
       }
+      storageWatched.push(obj);
+      localStorage.setItem('watched', JSON.stringify(storageWatched));
+      watchedAddBtnRef.classList.add('is-hidden');
+      watchedRemoveBtnRef.classList.remove('is-hidden');
+
       isWatched = true;
       if (window.location.href.endsWith('my-library')) {
         renderWatched();
       }
+      console.log('watched', isWatched);
     });
     watchedRemoveBtnRef.addEventListener('click', () => {
       storageWatched = JSON.parse(localStorage.getItem('watched'));
-      console.log(storageWatched);
-      const index = storageWatched.findIndex(item => item.id == isWatched.id);
+      const index = storageWatched.findIndex(item => item.id == obj.id);
       storageWatched.splice(index, 1);
       if (storageWatched.length === 0) {
         localStorage.removeItem('watched');
@@ -104,9 +101,46 @@ async function onOpen(event) {
         renderWatched();
       }
       isWatched = false;
+      console.log('watched', isWatched);
     });
 
-    return inQueue;
+    const queueAddBtnRef = document.querySelector('.queue-add');
+    const queueRemoveBtnRef = document.querySelector('.queue-remove');
+    if (inQueue) {
+      queueAddBtnRef.classList.add('is-hidden');
+    } else {
+      queueRemoveBtnRef.classList.add('is-hidden');
+    }
+    queueAddBtnRef.addEventListener('click', () => {
+      if (localStorage.getItem('queue')) {
+        storageQueue = JSON.parse(localStorage.getItem('queue'));
+      }
+      storageQueue.push(obj);
+      localStorage.setItem('queue', JSON.stringify(storageQueue));
+      queueAddBtnRef.classList.add('is-hidden');
+      queueRemoveBtnRef.classList.remove('is-hidden');
+
+      inQueue = true;
+      if (window.location.href.endsWith('my-library')) {
+        renderQueue();
+      }
+    });
+    queueRemoveBtnRef.addEventListener('click', () => {
+      storageQueue = JSON.parse(localStorage.getItem('queue'));
+      const index = storageQueue.findIndex(item => item.id == obj.id);
+      storageQueue.splice(index, 1);
+      if (storageQueue.length === 0) {
+        localStorage.removeItem('queue');
+      } else {
+        localStorage.setItem('queue', JSON.stringify(storageQueue));
+      }
+      queueRemoveBtnRef.classList.add('is-hidden');
+      queueAddBtnRef.classList.remove('is-hidden');
+      if (window.location.href.endsWith('my-library')) {
+        renderQueue();
+      }
+      inQueue = false;
+    });
   });
   // .then(inQueue => {
   //   const queueBtnRef = document.querySelector('.queueBtn');
