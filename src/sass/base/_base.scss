@@ -17,3 +17,8 @@
     max-width: 1024px;
   }
 }
+
+// для модалки
+.basicLightbox--visible {
+  overflow-y: scroll;
+}
