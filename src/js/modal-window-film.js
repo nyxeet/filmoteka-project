@@ -4,6 +4,7 @@ import modalTemplate from '../templates/modal-window-film.hbs';
 import * as basicLightbox from 'basiclightbox';
 import 'basiclightbox/dist/basicLightbox.min.css';
 import { renderWatched, renderQueue } from './my-library';
+import placeholder from './spinner';
 
 // ссылка нашего списка
 const filmListRef = document.querySelector('.movies');
@@ -21,7 +22,7 @@ filmListRef.addEventListener('click', onOpen);
 // открытие модалки.
 async function onOpen(event) {
   const target = event.target;
-
+  placeholder.spinner.show();
   // проверка на click в карточку фильма
   if (
     target.nodeName !== 'IMG' &&
@@ -153,6 +154,7 @@ async function onOpen(event) {
       }
     });
   });
+  placeholder.spinner.close();
 
   // ссылка на кнопку закрытия
   const closeBtnRef = document.querySelectorAll('.js-close-btn');
