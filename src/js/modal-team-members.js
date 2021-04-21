@@ -9,11 +9,19 @@ function openModalBtn(ref) {
   // слушатель на кнопку в футере
   ref.addEventListener('click', onModalBtnClick);
 }
+
 function onModalBtnClick(event) {
   event.preventDefault();
   const markup = templateOfDevTeam();
   // создаем плагин basicLightbox и передаем в него разметку
-  instance = basicLightbox.create(markup);
+  instance = basicLightbox.create(markup, {
+    onShow: instance => {
+      document.body.style.overflow = 'hidden';
+    },
+    onClose: instance => {
+      document.body.style.overflow = 'visible';
+    },
+  });
   // показываем модалку
   instance.show();
 
@@ -27,6 +35,7 @@ function onModalBtnClick(event) {
   // во время когда модалка открыта - вешаем слушателя окно для закрытия по ESCAPE
   window.addEventListener('keydown', onClose);
 }
+
 // закрытие модалки по ESCAPE или кнопке
 function onClose(event) {
   //   console.log(event.target.nodeName);

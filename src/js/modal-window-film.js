@@ -58,7 +58,16 @@ async function onOpen(event) {
 
     const data = parsedData(res);
     const markup = modalTemplate(data);
-    instance = basicLightbox.create(markup);
+
+    instance = basicLightbox.create(markup, {
+      onShow: instance => {
+        document.body.style.overflow = 'hidden';
+      },
+      onClose: instance => {
+        document.body.style.overflow = 'visible';
+      },
+    });
+
     // показываем модалку
     instance.show();
 
